@@ -16,8 +16,8 @@ int main() {
     string outputLabel;
     string command;        // operation to be executed
 
-    int item;
-    QueType<int> queue(5);
+    char item;
+    QueType<char> queue(5);
     int numCommands;
 
 
@@ -25,6 +25,10 @@ int main() {
     cout << "Enter name of input command file; press return." << endl;
     cin >> inFileName;
     inFile.open(inFileName.c_str());
+    if(inFile.fail()) {
+        cerr << "File failed to open" << endl;
+        exit(1);
+    }
 
     cout << "Enter name of output file; press return." << endl;
     cin >> outFileName;
@@ -39,6 +43,7 @@ int main() {
 
     numCommands = 0;
     while (command != "Quit") {
+        cout << "Processing: " << command << endl;
         try {
             if (command == "Enqueue") {
                 inFile >> item;
@@ -63,13 +68,12 @@ int main() {
         catch (FullQueue) {
             outFile << "FullQueue exception thrown." << endl;
         }
-
         catch (EmptyQueue) {
             outFile << "EmtpyQueue exception thrown." << endl;
         }
         numCommands++;
-        cout << " Command number " << numCommands << " completed."
-             << endl;
+        cout << " Command number " << numCommands << " completed." << endl;
+
         inFile >> command;
 
     };
